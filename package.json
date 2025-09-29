@@ -1,5 +1,5 @@
 {
-  "name": "skeleton-node",
+  "name": "odin-battleship",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
