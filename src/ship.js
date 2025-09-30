@@ -5,6 +5,7 @@ export default class Ship {
 
     constructor(length) {
         this.length = length > 0 ? length : 1;
+        this.hitCount = 0;
     }
 
 
