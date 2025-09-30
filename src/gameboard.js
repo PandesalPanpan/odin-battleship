@@ -26,6 +26,11 @@ export default class GameBoard {
             } else {
                 this.board[x][y + i] = 1;
             }
+            if (!isHorizontal) {
+                this.board[x + i][y] = 1;
+            } else {
+                this.board[x][y + i] = 1;
+            }
         }
         this.ships.push(ship);
 
