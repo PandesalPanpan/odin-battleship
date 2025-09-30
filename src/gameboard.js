@@ -14,8 +14,8 @@ export default class GameBoard {
         // check if invalid coordinates
         const isInstanceOfShip = ship instanceof Ship;
         const isShipAlreadyPlaced = this.isShipInGameBoard(ship);
-        const isInvalidCoordinates = x < 0 || x > 9 || y < 0 || y > 9;
-        if (isInvalidCoordinates || !isInstanceOfShip || isShipAlreadyPlaced) {
+        const isValidCoordinates = this.isValidCoordinates(ship.length, x, y, isHorizontal);
+        if (!isValidCoordinates || !isInstanceOfShip || isShipAlreadyPlaced) {
             return;
         }
 
@@ -29,6 +29,17 @@ export default class GameBoard {
         }
         this.ships.push(ship);
 
+    }
+
+    isValidCoordinates = (length, x, y, isHorizontal = true) => {
+        const isStartingPositionInvalid = x < 0 || x > 9 || y < 0 || y > 9;
+        if (isHorizontal) {
+            const endOfy = y+length - 1;
+            return !isStartingPositionInvalid && (endOfy > -1 && endOfy < 10);
+        } else {
+            const endOfx = x+length - 1;
+            return !isStartingPositionInvalid && (endOfX > -1 && endOfx < 10)
+        }
     }
 
     isShipInGameBoard = (ship) => {
