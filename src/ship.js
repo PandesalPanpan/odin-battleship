@@ -8,6 +8,13 @@ export default class Ship {
         this.hitCount = 0;
     }
 
+    hit = () => {
+        if (this.hitCount + 1 > this.length) {
+            return;
+        }
+        this.hitCount++;
+    }
+
 
     // hit method - increases amount of hit
 }
