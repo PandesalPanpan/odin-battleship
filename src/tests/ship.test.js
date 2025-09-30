@@ -32,3 +32,20 @@ describe('hit count property', () => {
         expect(ship.hitCount).toEqual(0);
     })
 });
+
+describe('hit method', () => {
+    const ship = new Ship();
+    it('should have a hit method', () => {
+        expect(typeof ship.hit).toBe('function');
+    });
+
+    it('should increase the hitCount to 1 after a hit', () => {
+        ship.hit();
+        expect(ship.hitCount).toBe(1);
+    })
+
+    it('should not increase the hitCount if exceeds ship length', () => {
+        ship.hit();
+        expect(ship.hitCount).toBe(1);
+    })
+})
