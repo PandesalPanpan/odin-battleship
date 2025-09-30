@@ -12,10 +12,10 @@ export default class GameBoard {
 
     placeShip = (ship, x, y, isHorizontal = true) => {
         // check if invalid coordinates
-
         const isInstanceOfShip = ship instanceof Ship;
+        const isShipAlreadyPlaced = this.isShipInGameBoard(ship);
         const isInvalidCoordinates = x < 0 || x > 9 || y < 0 || y > 9;
-        if (isInvalidCoordinates || !isInstanceOfShip) {
+        if (isInvalidCoordinates || !isInstanceOfShip || isShipAlreadyPlaced) {
             return;
         }
 
@@ -31,5 +31,11 @@ export default class GameBoard {
 
     }
 
-
+    isShipInGameBoard = (ship) => {
+        return this.getShips().filter((placedShip) => {
+            return placedShip === ship;
+        }).length > 0;
+    }
 }
+
+
