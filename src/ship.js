@@ -4,7 +4,7 @@ export default class Ship {
     // isSunk
 
     constructor(length) {
-        this.length = length > 0 ? length : 1;
+        this.length = length > 1 ? length <= 5 ? length : 5 : 2;
         this.hitCount = 0;
     }
 
