@@ -21,3 +21,14 @@ describe('properties of the instance ship', () => {
     })
 
 })
+
+describe('hit count property', () => {
+    const ship = new Ship(4);
+    it('should have a hitCount property', () => {
+        expect(ship.hitCount).toBeDefined();
+    })
+
+    it('should start with a hitCount of 0', () => {
+        expect(ship.hitCount).toEqual(0);
+    })
+});
