@@ -48,4 +48,22 @@ describe('hit method', () => {
         ship.hit();
         expect(ship.hitCount).toBe(1);
     })
+});
+
+describe('isSunk method', () => {
+    const ship = new Ship(3);
+    it('should have a isSunk method', () => {
+        expect(typeof ship.isSunk).toBe('function');
+    });
+
+    it('should return false after 1 hit', () => {
+        ship.hit();
+        expect(ship.isSunk()).toBe(false);
+    });
+
+    it('should return true after extra hits', () => {
+        ship.hit();
+        ship.hit();
+        expect(ship.isSunk()).toBe(true);
+    });
 })
