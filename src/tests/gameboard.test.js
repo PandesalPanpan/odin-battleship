@@ -8,14 +8,31 @@ it('should have a GameBoard class/function', () => {
 describe('GameBoard ships instances', () => {
     const gameBoard = new GameBoard();
     const ship1 = new Ship();
+    const board = gameBoard.board;
     gameBoard.placeShip(ship1, 0, 0)
     it('should have one ship inside the gameBoard', () => {
         expect(gameBoard.getShips().length).toBeGreaterThan(0);
     })
 
     it('should have parts of the ship be on the right coordinates', () => {
-        const board = gameBoard.board;
         expect(board[0][0]).toBe(1);
         expect(board[0][1]).toBe(1);
     })
+
+    it('should not place the ship if the coordinates are invalid', () => {
+        const ship2 = new Ship();
+        const snapshot = gameBoard.board;
+        gameBoard.placeShip(ship2, -1, 10);
+        expect(snapshot).toEqual(gameBoard.board);
+    });
+
+    it('should not place if passed ship is not an instance of Ship class',() => {
+        const shipString = 'Im a ship';
+        gameBoard.placeShip(shipString, 1,0);
+        for (let i = 0; i < 2; i++) {
+            expect(board[1][0+i]).toBeNull();
+        }
+    })
+
+    // Write a test that if a ship is already in the gameBoard, don't allow to place it
 });
