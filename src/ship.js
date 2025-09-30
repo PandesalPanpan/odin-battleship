@@ -15,6 +15,10 @@ export default class Ship {
         this.hitCount++;
     }
 
+    isSunk = () => {
+        return this.hitCount >= this.length;
+    }
+
 
     // hit method - increases amount of hit
 }
