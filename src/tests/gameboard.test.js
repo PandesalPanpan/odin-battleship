@@ -35,4 +35,15 @@ describe('GameBoard ships instances', () => {
     })
 
     // Write a test that if a ship is already in the gameBoard, don't allow to place it
+    it('should not place an instance of a ship that is already placed', () => {
+        const ship = new Ship(3);
+        gameBoard.placeShip(ship, 1, 0);
+        gameBoard.placeShip(ship, 2, 0);
+        for (let i = 0; i < ship.length; i++) {
+            expect(board[1][i]).toBe(1);
+            expect(board[2][i]).toBeNull();
+        }
+    })
+
+    // Test if the coordinates is already taken
 });
