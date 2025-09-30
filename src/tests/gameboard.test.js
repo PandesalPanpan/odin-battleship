@@ -46,4 +46,9 @@ describe('GameBoard ships instances', () => {
     })
 
     // Test if the coordinates is already taken
+    it('should not place ship its too big for its coordinates', () => {
+        const ship = new Ship(5);
+        gameBoard.placeShip(ship, 1, 6);
+        expect(board[1][6]).toBe(null);
+    })
 });
