@@ -5,19 +5,19 @@ it('should be an instance of a function/class', () => {
 })
 
 describe('properties of the instance ship', () => {
-    it('should have a property length of 1', () => {
-        const ship = new Ship(1);
-        expect(ship.length).toBe(1);
+    it('should have a property length of 2', () => {
+        const ship = new Ship(2);
+        expect(ship.length).toBe(2);
     });
 
-    it('should be fixed to length 1 if input < 1', () => {
+    it('should be fixed to length 2 if input < 1', () => {
         const ship = new Ship(-1);
-        expect(ship.length).toBe(1);
+        expect(ship.length).toBe(2);
     });
 
-    it('should have a property length of 8', () => {
+    it('should have a property length of 5', () => {
         const ship = new Ship(8);
-        expect(ship.length).toBe(8);
+        expect(ship.length).toBe(5);
     })
 
 })
@@ -45,8 +45,8 @@ describe('hit method', () => {
     })
 
     it('should not increase the hitCount if exceeds ship length', () => {
-        ship.hit();
-        expect(ship.hitCount).toBe(1);
+        for (let i = 0; i < 10; i++) { ship.hit() }
+        expect(ship.hitCount).toBe(2);
     })
 });
 
