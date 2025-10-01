@@ -5,7 +5,7 @@ it('should have a GameBoard class/function', () => {
     expect(typeof GameBoard).toBe('function');
 })
 
-describe('GameBoard ships instances', () => {
+describe.only('GameBoard ships instances', () => {
     const gameBoard = new GameBoard();
     const ship1 = new Ship();
     const board = gameBoard.board;
@@ -15,8 +15,8 @@ describe('GameBoard ships instances', () => {
     })
 
     it('should have parts of the ship be on the right coordinates', () => {
-        expect(board[0][0]).toBe(1);
-        expect(board[0][1]).toBe(1);
+        expect(board[0][0]).toBe(ship1);
+        expect(board[0][1]).toBe(ship1);
     })
 
     it('should not place the ship if the coordinates are invalid', () => {
@@ -40,7 +40,7 @@ describe('GameBoard ships instances', () => {
         gameBoard.placeShip(ship, 1, 0);
         gameBoard.placeShip(ship, 2, 0);
         for (let i = 0; i < ship.length; i++) {
-            expect(board[1][i]).toBe(1);
+            expect(board[1][i]).toBe(ship);
             expect(board[2][i]).toBeNull();
         }
     })
