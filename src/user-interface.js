@@ -53,14 +53,12 @@ export default class UserInterface {
         const board = this.player1.gameBoard.board;
         this.player1.gameBoard.placeShip(new Ship(), 0, 0);
 
-
-
-
-        // For each row array elements, place a cell
-        board.forEach((row) => {
-            row.forEach((cell) => {
+        board.forEach((row, rowIndex) => {
+            row.forEach((cell, colIndex) => {
                 const box = document.createElement('div');
                 box.classList.add('cell');
+                box.dataset.x = rowIndex;
+                box.dataset.y = colIndex;
                 box.textContent = cell ? 'o' : ' ';
                 this.player1Container.appendChild(box);
             })
