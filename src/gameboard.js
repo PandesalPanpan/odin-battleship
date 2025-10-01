@@ -3,6 +3,7 @@ import Ship from "./ship.js";
 export default class GameBoard {
     constructor() {
         this.ships = [];
+        this.receivedAttacks = [];
         this.board = Array(10).fill(null).map(() => Array(10).fill(null));
     }
 
@@ -33,7 +34,23 @@ export default class GameBoard {
             }
         }
         this.ships.push(ship);
+    }
 
+    receiveAttack = (x, y) => {
+        // check the cell if its a ship instance or null
+        const ship = this.board[x][y];
+        if (ship) {
+            ship.hit();
+        }
+
+        this.receivedAttacks.push({x,y});
+    }   
+
+    isAllShipSunked = () => {
+        // Loop through the list and check if they all have isSunk() true
+        return this.ships.every((ship) => {
+            return ship.isSunk() === true;
+        });
     }
 
     isValidCoordinates = (length, x, y, isHorizontal = true) => {
@@ -43,7 +60,7 @@ export default class GameBoard {
             return !isStartingPositionInvalid && (endOfy > -1 && endOfy < 10);
         } else {
             const endOfx = x+length - 1;
-            return !isStartingPositionInvalid && (endOfX > -1 && endOfx < 10)
+            return !isStartingPositionInvalid && (endOfx > -1 && endOfx < 10)
         }
     }
 
@@ -51,5 +68,3 @@ export default class GameBoard {
         return this.getShips().some((placedShip) => placedShip === ship)
     }
 }
-
-
