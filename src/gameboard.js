@@ -48,9 +48,7 @@ export default class GameBoard {
     }
 
     isShipInGameBoard = (ship) => {
-        return this.getShips().filter((placedShip) => {
-            return placedShip === ship;
-        }).length > 0;
+        return this.getShips().some((placedShip) => placedShip === ship)
     }
 }
 
