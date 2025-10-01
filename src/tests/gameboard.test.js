@@ -5,7 +5,7 @@ it('should have a GameBoard class/function', () => {
     expect(typeof GameBoard).toBe('function');
 })
 
-describe.only('GameBoard ships instances', () => {
+describe('GameBoard ships instances', () => {
     const gameBoard = new GameBoard();
     const ship1 = new Ship();
     const board = gameBoard.board;
@@ -52,3 +52,41 @@ describe.only('GameBoard ships instances', () => {
         expect(board[1][6]).toBe(null);
     })
 });
+
+describe('receiveAttack method', () => {
+    const gameBoard = new GameBoard();
+    it('should have a receiveAttack method', () => {
+        expect(typeof gameBoard.receiveAttack).toBe('function');
+    })
+
+    // Place some ships
+    const ship1 = new Ship(2);
+    gameBoard.placeShip(ship1, 0,0);
+    gameBoard.receiveAttack(0,0);
+    it('should have taken a damage', () => {
+        expect(ship1.hitCount).toBe(1);
+    });
+
+    // Miss an attack & check if the missed attack is recorded
+    it('should have recorded the missed attack', () => {
+        gameBoard.receiveAttack(1,0);
+        expect(gameBoard.receivedAttacks.length).toBeGreaterThan(0);
+    });
+
+    it('should have coordinates of the attacks', () => {
+        gameBoard.receiveAttack(2,0)
+        expect(gameBoard.receivedAttacks.some((coordinate) => {
+            return coordinate.x == 2 && coordinate.y == 0;
+        })).toBe(true);
+    });
+    
+
+    it('should report not all ships have sunk', () => {
+        expect(gameBoard.isAllShipSunked()).toBe(false);
+    });
+
+    it('should report all ships have sunked', () => {
+        gameBoard.receiveAttack(0,1);
+        expect(gameBoard.isAllShipSunked()).toBe(true);
+    })
+})
