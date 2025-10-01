@@ -49,9 +49,15 @@ export default class UserInterface {
     }
 
     displayUserGameboard = () => {
-        // Grab the user board
-        const board = this.player1.gameBoard.board;
-        this.player1.gameBoard.placeShip(new Ship(), 0, 0);
+        // Grab the user 
+        this.player1.gameBoard.placeShip(new Ship(2), 5,4);
+        
+        this.renderGameboard(this.player1.gameBoard, this.player1Container, '1');
+        this.renderGameboard(this.player2.gameBoard, this.player2Container, '2');
+    }
+
+    renderGameboard = (gameBoard, playerContainer, playerId) => {
+        const board = gameBoard.board;
 
         board.forEach((row, rowIndex) => {
             row.forEach((cell, colIndex) => {
@@ -59,11 +65,11 @@ export default class UserInterface {
                 box.classList.add('cell');
                 box.dataset.x = rowIndex;
                 box.dataset.y = colIndex;
+                box.dataset.player = playerId;
                 box.textContent = cell ? 'o' : ' ';
-                this.player1Container.appendChild(box);
+                playerContainer.appendChild(box);
             })
         })
-        // Display it
     }
 
     createUsersContainer = () => {
