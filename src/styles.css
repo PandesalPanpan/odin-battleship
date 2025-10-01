@@ -74,3 +74,27 @@ h6 {
 #__next {
   isolation: isolate;
 }
+
+.game-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
+  border: 2px solid #333;
+}
+
+.cell {
+  display: flex;
+  border: 1px solid black;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
