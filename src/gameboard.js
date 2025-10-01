@@ -22,14 +22,14 @@ export default class GameBoard {
         // get the ship length
         for (let i = 0; i < ship.length; i++) {
             if (!isHorizontal) {
-                this.board[x + i][y] = 1;
+                this.board[x + i][y] = ship;
             } else {
-                this.board[x][y + i] = 1;
+                this.board[x][y + i] = ship;
             }
             if (!isHorizontal) {
-                this.board[x + i][y] = 1;
+                this.board[x + i][y] = ship;
             } else {
-                this.board[x][y + i] = 1;
+                this.board[x][y + i] = ship;
             }
         }
         this.ships.push(ship);
