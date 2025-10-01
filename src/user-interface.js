@@ -58,15 +58,12 @@ export default class UserInterface {
 
         // For each row array elements, place a cell
         board.forEach((row) => {
-            const column = document.createElement('div');
-            column.classList.add('column');
             row.forEach((cell) => {
                 const box = document.createElement('div');
                 box.classList.add('cell');
                 box.textContent = cell ? 'o' : ' ';
-                column.appendChild(box);
+                this.player1Container.appendChild(box);
             })
-            this.player1Container.appendChild(column);
         })
         // Display it
     }
