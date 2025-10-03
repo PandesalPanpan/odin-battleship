@@ -39,6 +39,8 @@ export default class GameBoard {
         }
 
         this.receivedAttacks.push({x,y});
+
+        return !!ship;
     }   
 
     isAllShipSunked = () => {
