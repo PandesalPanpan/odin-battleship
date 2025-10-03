@@ -88,5 +88,14 @@ describe('receiveAttack method', () => {
     it('should report all ships have sunked', () => {
         gameBoard.receiveAttack(0,1);
         expect(gameBoard.isAllShipSunked()).toBe(true);
+    });
+
+    it('should report true on successful hit', () => {
+        gameBoard.placeShip(new Ship(2), 5,0);
+        expect(gameBoard.receiveAttack(5,0)).toBe(true);
+    });
+
+    it('should report false on missed hit', () => {
+        expect(gameBoard.receiveAttack(6,0)).toBe(false);
     })
 })
