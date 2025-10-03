@@ -53,14 +53,53 @@ export default class UserInterface {
 
     displayUserGameboard = () => {
         // Grab the user 
-        this.player1.gameBoard.placeShip(new Ship(2), 5, 4);
-        this.player2.gameBoard.placeShip(new Ship(3), 5, 4);
+        // Randomize player1 placeships
+        this.generateRandomShipPlacements(this.player1);
+        this.generateRandomShipPlacements(this.player2);
 
         this.renderGameboard(this.player1.gameBoard, this.player1Container, '1');
         this.renderGameboard(this.player2.gameBoard, this.player2Container, '2');
 
+
+
         this.attachGameBoardEventListener();
     }
+
+    generateRandomShipPlacements = (player) => {
+        // 3, Ship(2)
+        this.placeShips(player, 2, 3);
+        // 3, Ship(3)
+        this.placeShips(player, 3, 3);
+        // 2, Ship(4)
+        this.placeShips(player, 2, 4);
+        // 1, Ship(5)
+        this.placeShips(player, 1, 5);
+    }
+
+    placeShips = (player, count, length) => {
+        for (let i = 0; i < count; i++) {
+            do {
+                const currentShip = new Ship(length);
+                const currentCoordinates = this.getRandomCoordinates();
+                player.gameBoard.placeShip(
+                    currentShip,
+                    currentCoordinates.x,
+                    currentCoordinates.y,
+                    Math.random() > 0.5 ? true : false
+                );
+
+                // Check if ships is placed
+                const isShipPlaced = player.gameBoard.ships.some((ship) => {
+                    return currentShip === ship;
+                })
+
+                if (isShipPlaced) break;
+
+            } while (true);
+        }
+    }
+
+
 
     attachGameBoardEventListener = () => {
         this.player2Container.addEventListener('click', this.handlePlayerAttack)
