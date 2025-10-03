@@ -38,10 +38,10 @@ export default class GameBoard {
             ship.hit();
         }
 
-        this.receivedAttacks.push({x,y});
+        this.receivedAttacks.push({ x, y });
 
         return !!ship;
-    }   
+    }
 
     isAllShipSunked = () => {
         // Loop through the list and check if they all have isSunk() true
@@ -52,13 +52,26 @@ export default class GameBoard {
 
     isValidCoordinates = (length, x, y, isHorizontal = true) => {
         const isStartingPositionInvalid = x < 0 || x > 9 || y < 0 || y > 9;
-        if (isHorizontal) {
-            const endOfy = y+length - 1;
-            return !isStartingPositionInvalid && (endOfy > -1 && endOfy < 10);
-        } else {
-            const endOfx = x+length - 1;
-            return !isStartingPositionInvalid && (endOfx > -1 && endOfx < 10)
+        if (isStartingPositionInvalid) {
+            return false;
         }
+
+        if (isHorizontal) {
+            if (y + length > 10) return false;
+        } else {
+            if (x + length > 10) return false;
+        }
+
+        for (let i = 0; i < length; i++) {
+            const checkX = isHorizontal ? x : x + i;
+            const checkY = isHorizontal ? y + i : y;
+
+            if (this.board[checkX][checkY] !== null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     isShipInGameBoard = (ship) => {
