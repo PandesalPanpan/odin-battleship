@@ -30,7 +30,7 @@ export default class UserInterface {
     }
 
     handleNewGameButton = () => {
-        if (this.gameContainer) { 
+        if (this.gameContainer) {
             this.gameContainer.remove();
         };
 
@@ -69,26 +69,67 @@ export default class UserInterface {
     handlePlayerAttack = (event) => {
         const clicked = event.target.closest('div');
         if (clicked.classList.contains('cell') && !clicked.classList.contains('miss') && !clicked.classList.contains('hit')) {
-            // Grab the cell player
-            const playerReceiveAttack = clicked.dataset.player == 2 ? this.player2 : this.player1;
+            this.processAttack(clicked)
 
-            // trigger a receiveAttack
-            const isHit = playerReceiveAttack.gameBoard.receiveAttack(clicked.dataset.x, clicked.dataset.y);
 
-            // update cell
-            this.updateCell(clicked, isHit);
-
-            // Check is a players gameBoard all ship sunk
-            const isGameOver = playerReceiveAttack.gameBoard.isAllShipSunked();
-            if (isGameOver) {
-                this.disableGameContainerInteraction();
-
-                setTimeout(() => {
-                    this.showGameOverModal('Player 1 Wins!');
-                }, 100);
-            }
+            this.generateComputerAttack();
 
         }
+    }
+
+    processAttack = (cellElement) => {
+        const playerReceiveAttack = cellElement.dataset.player == 2 ? this.player2 : this.player1;
+        const isHit = playerReceiveAttack.gameBoard.receiveAttack(cellElement.dataset.x, cellElement.dataset.y);
+
+        // update cell
+        this.updateCell(cellElement, isHit);
+
+        // Check is a players gameBoard all ship sunk
+        const isGameOver = playerReceiveAttack.gameBoard.isAllShipSunked();
+        if (isGameOver) {
+            this.disableGameContainerInteraction();
+
+            setTimeout(() => {
+                this.showGameOverModal(`
+                        ${cellElement.dataset.player == 2 ? 'Player 1' : 'Player 2'} wins!
+                        `);
+            }, 100);
+        }
+
+    }
+
+    generateComputerAttack = () => {
+        // Select a valid cell on html on the player 1 container
+
+        // Generate an x and a y and check if its not already taken in the player1.ReceivedAttacks
+        let attackCoordinates;
+        const usedCoordinates = this.player1.gameBoard.receivedAttacks
+        do {
+            attackCoordinates = this.getRandomCoordinates();
+            const isNotValid = usedCoordinates.some((usedCoordinate) => {
+                return usedCoordinate.x == attackCoordinates.x && usedCoordinate.y == attackCoordinates.y;
+            })
+
+            if (!isNotValid) break;
+
+        } while (true)
+
+        // Trigger a handlePlayerAttack by using querySelector
+        const targetCell = this.getCellWithCoordinates(this.player1Container, attackCoordinates);
+
+        this.processAttack(targetCell);
+
+    }
+
+    getRandomCoordinates = () => {
+        return {
+            x: Math.floor(Math.random() * 10),
+            y: Math.floor(Math.random() * 10)
+        }
+    }
+
+    getCellWithCoordinates = (container, coordinates) => {
+        return container.querySelector(`[data-x="${coordinates.x}"][data-y="${coordinates.y}"]`)
     }
 
     updateCell = (cell, isHit) => {
@@ -100,7 +141,7 @@ export default class UserInterface {
             cell.classList.add('miss');
         }
 
-        
+
     }
 
     disableGameContainerInteraction = () => {
