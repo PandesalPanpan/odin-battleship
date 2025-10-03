@@ -51,6 +51,15 @@ describe('GameBoard ships instances', () => {
         gameBoard.placeShip(ship, 1, 6);
         expect(board[1][6]).toBe(null);
     })
+
+    it('should not place ship if it overlaps with another ship', () => {
+        const ship1 = new Ship(5);
+        const overlapShip = new Ship(5);
+        gameBoard.placeShip(ship1, 4, 4, false);
+        const currentAmountOfShips = gameBoard.ships.length;
+        gameBoard.placeShip(overlapShip, 4, 2, true);
+        expect(currentAmountOfShips == gameBoard.ships.length).toBe(true);
+    })
 });
 
 describe('receiveAttack method', () => {
