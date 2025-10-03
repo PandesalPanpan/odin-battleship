@@ -15,7 +15,8 @@ export default class UserInterface {
 
     initialize = () => {
         this.createNewGameButton();
-        this.attachNewGameEventListener()
+        this.attachNewGameEventListener();
+        this.handleNewGameButton();
     }
 
     createNewGameButton = () => {
