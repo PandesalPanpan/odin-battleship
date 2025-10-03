@@ -8,28 +8,31 @@ import Ship from "./ship";
 
 export default class UserInterface {
     constructor() {
-        this.startButton = null;
+        this.newGameButton = null;
         this.player1 = null;
         this.player2 = null;
     }
 
     initialize = () => {
-        this.createStartButton();
-        this.attachStartEventListener()
+        this.createNewGameButton();
+        this.attachNewGameEventListener()
     }
 
-    createStartButton = () => {
-        this.startButton = document.createElement('button');
-        this.startButton.textContent = 'Start Game'
-        document.body.appendChild(this.startButton);
+    createNewGameButton = () => {
+        this.newGameButton = document.createElement('button');
+        this.newGameButton.classList.add('new-game-button');
+        this.newGameButton.textContent = 'New Game'
+        document.body.appendChild(this.newGameButton);
     }
 
-    attachStartEventListener = () => {
-        this.startButton.addEventListener('click', this.handleStartButton)
+    attachNewGameEventListener = () => {
+        this.newGameButton.addEventListener('click', this.handleNewGameButton)
     }
 
-    handleStartButton = () => {
-        if (this.gameContainer) return;
+    handleNewGameButton = () => {
+        if (this.gameContainer) { 
+            this.gameContainer.remove();
+        };
 
         // Create the two players
         this.player1 = new Player();
@@ -78,7 +81,11 @@ export default class UserInterface {
             // Check is a players gameBoard all ship sunk
             const isGameOver = playerReceiveAttack.gameBoard.isAllShipSunked();
             if (isGameOver) {
-                this.showGameOverModal('Player 1 Wins!');
+                this.disableGameContainerInteraction();
+
+                setTimeout(() => {
+                    this.showGameOverModal('Player 1 Wins!');
+                }, 100);
             }
 
         }
@@ -94,6 +101,11 @@ export default class UserInterface {
         }
 
         
+    }
+
+    disableGameContainerInteraction = () => {
+        this.gameContainer.style.pointerEvents = 'none';
+        this.gameContainer.classList.add('game-over');
     }
 
     showGameOverModal = (message) => {
