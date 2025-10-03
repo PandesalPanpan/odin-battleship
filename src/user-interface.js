@@ -51,6 +51,7 @@ export default class UserInterface {
     displayUserGameboard = () => {
         // Grab the user 
         this.player1.gameBoard.placeShip(new Ship(2), 5, 4);
+        this.player2.gameBoard.placeShip(new Ship(3), 5, 4);
 
         this.renderGameboard(this.player1.gameBoard, this.player1Container, '1');
         this.renderGameboard(this.player2.gameBoard, this.player2Container, '2');
@@ -64,16 +65,54 @@ export default class UserInterface {
 
     handlePlayerAttack = (event) => {
         const clicked = event.target.closest('div');
-        if (clicked.classList.contains('cell')) {
+        if (clicked.classList.contains('cell') && !clicked.classList.contains('miss') && !clicked.classList.contains('hit')) {
             // Grab the cell player
             const playerReceiveAttack = clicked.dataset.player == 2 ? this.player2 : this.player1;
-            
+
             // trigger a receiveAttack
-            playerReceiveAttack.gameBoard.receiveAttack(clicked.dataset.x, clicked.dataset.y);
+            const isHit = playerReceiveAttack.gameBoard.receiveAttack(clicked.dataset.x, clicked.dataset.y);
 
             // update cell
+            this.updateCell(clicked, isHit);
+
+            // Check is a players gameBoard all ship sunk
+            const isGameOver = playerReceiveAttack.gameBoard.isAllShipSunked();
+            if (isGameOver) {
+                this.showGameOverModal('Player 1 Wins!');
+            }
+
+        }
+    }
+
+    updateCell = (cell, isHit) => {
+        if (isHit) {
+            // update cell class to hit
+            cell.classList.add('hit');
+        } else {
+            // update cell to miss
+            cell.classList.add('miss');
         }
 
+        
+    }
+
+    showGameOverModal = (message) => {
+        const dialog = document.createElement('dialog');
+        dialog.innerHTML = `
+        <div class="modal-content">
+            <h2>${message}</h2>
+            <button id="close-modal" class="modal-button">OK</button>
+        </div>
+        `
+
+        document.body.appendChild(dialog);
+        dialog.showModal();
+
+        // event listener that removes the elements itself
+        dialog.querySelector('#close-modal').addEventListener('click', () => {
+            dialog.close();
+            dialog.remove();
+        })
     }
 
     renderGameboard = (gameBoard, playerContainer, playerId) => {
@@ -82,11 +121,18 @@ export default class UserInterface {
         board.forEach((row, rowIndex) => {
             row.forEach((cell, colIndex) => {
                 const box = document.createElement('div');
-                box.classList.add('cell');
+                // only show player 1 ships
                 box.dataset.x = rowIndex;
                 box.dataset.y = colIndex;
                 box.dataset.player = playerId;
-                box.textContent = cell ? 'o' : ' ';
+                box.classList.add('cell');
+
+                if (cell && playerId === '1') {
+                    box.textContent = 'S';
+                    box.classList.add('ship');
+                } else {
+                    box.textContent = ' '
+                }
                 playerContainer.appendChild(box);
             })
         })
