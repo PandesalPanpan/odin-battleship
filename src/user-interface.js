@@ -15,7 +15,7 @@ export default class UserInterface {
 
     initialize = () => {
         this.createStartButton();
-        this.attachEventListener()
+        this.attachStartEventListener()
     }
 
     createStartButton = () => {
@@ -24,7 +24,7 @@ export default class UserInterface {
         document.body.appendChild(this.startButton);
     }
 
-    attachEventListener = () => {
+    attachStartEventListener = () => {
         this.startButton.addEventListener('click', this.handleStartButton)
     }
 
@@ -50,10 +50,30 @@ export default class UserInterface {
 
     displayUserGameboard = () => {
         // Grab the user 
-        this.player1.gameBoard.placeShip(new Ship(2), 5,4);
-        
+        this.player1.gameBoard.placeShip(new Ship(2), 5, 4);
+
         this.renderGameboard(this.player1.gameBoard, this.player1Container, '1');
         this.renderGameboard(this.player2.gameBoard, this.player2Container, '2');
+
+        this.attachGameBoardEventListener();
+    }
+
+    attachGameBoardEventListener = () => {
+        this.player2Container.addEventListener('click', this.handlePlayerAttack)
+    }
+
+    handlePlayerAttack = (event) => {
+        const clicked = event.target.closest('div');
+        if (clicked.classList.contains('cell')) {
+            // Grab the cell player
+            const playerReceiveAttack = clicked.dataset.player == 2 ? this.player2 : this.player1;
+            
+            // trigger a receiveAttack
+            playerReceiveAttack.gameBoard.receiveAttack(clicked.dataset.x, clicked.dataset.y);
+
+            // update cell
+        }
+
     }
 
     renderGameboard = (gameBoard, playerContainer, playerId) => {
