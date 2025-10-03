@@ -175,6 +175,7 @@ export default class UserInterface {
         if (isHit) {
             // update cell class to hit
             cell.classList.add('hit');
+            cell.classList.remove('ship');
         } else {
             // update cell to miss
             cell.classList.add('miss');
@@ -220,11 +221,9 @@ export default class UserInterface {
                 box.classList.add('cell');
 
                 if (cell && playerId === '1') {
-                    box.textContent = 'S';
                     box.classList.add('ship');
-                } else {
-                    box.textContent = ' '
                 }
+                box.textContent = ' ';
                 playerContainer.appendChild(box);
             })
         })

@@ -116,6 +116,11 @@ body {
   cursor: pointer;
 }
 
+.cell.ship {
+  background-color: #9ee79e;
+  opacity: 0.9;
+}
+
 .cell.hit {
   background-color: #e74c3c;
 }
