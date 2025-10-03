@@ -155,3 +155,19 @@ dialog::backdrop {
 .modal-button:hover {
   background: #0056b3;
 }
+
+.game-container.game-over {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.new-game-button {
+  margin: 1rem 45vw;
+  padding: 0.5rem 1rem;
+  background: #fc3f3f;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
