@@ -1,3 +1,12 @@
+.nunito-normal {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
 /* 1. Use a more-intuitive box-sizing model */
 *,
 *::before,
@@ -73,6 +82,10 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+}
+
+body {
+  font-family: 'Nunito', Arial, Helvetica, sans-serif;
 }
 
 .game-container {
